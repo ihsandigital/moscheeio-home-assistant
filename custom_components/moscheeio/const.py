@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Final
 
 DOMAIN: Final = "moscheeio"
-VERSION: Final = "0.1.0"
+VERSION: Final = "0.1.1"
 
 # The device-authorization client moschee.io knows Home Assistant by. It
 # creates a smart_mosque_box row of kind "home_assistant".
