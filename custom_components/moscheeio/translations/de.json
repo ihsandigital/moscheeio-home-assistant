@@ -1,0 +1,102 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit moschee.io verbinden",
+        "description": "Home Assistant wird wie eine Smart-Mosque-Box mit Ihrer Moschee auf moschee.io gekoppelt. Im nächsten Schritt bestätigen Sie einen Code auf moschee.io.",
+        "data": {
+          "environment": "moschee.io"
+        },
+        "data_description": {
+          "environment": "Stage nur wählen, wenn moschee.io Sie zum Testen einer Vorschau gebeten hat."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneut mit moschee.io verbinden",
+        "description": "moschee.io kennt dieses Home Assistant nicht mehr, zum Beispiel weil die Verbindung unter Smart Mosque → Mischpult → Einrichtung getrennt wurde. Koppeln Sie es mit einem neuen Code erneut."
+      },
+      "failed": {
+        "title": "Kopplung fehlgeschlagen"
+      },
+      "finish": {
+        "title": "Verbunden"
+      }
+    },
+    "progress": {
+      "wait_for_approval": "Öffnen Sie [{url}]({url}) angemeldet als Inhaber oder Admin Ihrer Moschee und bestätigen Sie den Code **{code}**. Home Assistant macht danach von selbst weiter."
+    },
+    "abort": {
+      "already_configured": "Dieses Home Assistant ist bereits mit dieser Moschee verbunden.",
+      "cannot_connect": "moschee.io ist nicht erreichbar. Versuchen Sie es später erneut.",
+      "denied": "Der Code wurde auf moschee.io abgelehnt.",
+      "expired": "Der Code ist abgelaufen, bevor er bestätigt wurde. Starten Sie neu.",
+      "not_linked": "Der Code wurde bestätigt, aber nicht für eine Moschee. Bestätigen Sie ihn, während auf moschee.io eine Moschee ausgewählt ist.",
+      "reauth_successful": "Wieder verbunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Schalter für moschee.io",
+        "description": "Wählen Sie die Schalter, die moschee.io sehen und schalten darf, etwa den Strom des Mischpults. Sie erscheinen in moschee.io und in der App neben dem Mischpult, und die Schalter-Regeln der Moschee können sie zu den Gebetszeiten schalten.",
+        "data": {
+          "switches": "Geteilte Schalter"
+        }
+      },
+      "confirm": {
+        "title": "Vor dem Ausschalten fragen",
+        "description": "moschee.io fragt, bevor es diese ausschaltet, und warnt, solange eine Übersetzung läuft.",
+        "data": {
+          "confirm_off": "Vor dem Ausschalten fragen"
+        }
+      }
+    },
+    "error": {
+      "too_many": "Teilen Sie höchstens 50 Schalter."
+    }
+  },
+  "selector": {
+    "environment": {
+      "options": {
+        "production": "moschee.io",
+        "stage": "Stage (moschee-stage.de)"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "relay": {
+        "name": "moschee.io-Verbindung"
+      }
+    },
+    "sensor": {
+      "live_rooms": {
+        "name": "Live-Übersetzungen",
+        "unit_of_measurement": "Räume"
+      },
+      "next_rule": {
+        "name": "Nächste Schalter-Regel"
+      },
+      "level": {
+        "name": "{channel} Pegel"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "moschee.io kennt dieses Home Assistant nicht mehr. Verbinden Sie es erneut."
+    },
+    "not_allowed": {
+      "message": "moschee.io erlaubt diesem Home Assistant nur, das Mischpult anzusehen. Ändern Sie das unter Smart Mosque → Mischpult → Einrichtung → Home Assistant."
+    },
+    "relay_offline": {
+      "message": "Gerade nicht mit moschee.io verbunden."
+    },
+    "desk_timeout": {
+      "message": "Das Mischpult hat nicht rechtzeitig geantwortet."
+    },
+    "desk_refused": {
+      "message": "Das Mischpult hat abgelehnt: {code}. Ein geschützter Kanal bleibt im Gebet an."
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to moschee.io",
+        "description": "Home Assistant pairs with your mosque on moschee.io like a Smart-Mosque-Box. You confirm a code on moschee.io in the next step.",
+        "data": {
+          "environment": "moschee.io"
+        },
+        "data_description": {
+          "environment": "Use Stage only if moschee.io asked you to test a preview."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Connect to moschee.io again",
+        "description": "moschee.io no longer knows this Home Assistant, for example because the connection was removed under Smart Mosque → Mischpult → Einrichtung. Pair again with a new code."
+      },
+      "failed": {
+        "title": "Pairing failed"
+      },
+      "finish": {
+        "title": "Connected"
+      }
+    },
+    "progress": {
+      "wait_for_approval": "Open [{url}]({url}) while signed in as an owner or admin of your mosque and confirm the code **{code}**. Home Assistant continues on its own."
+    },
+    "abort": {
+      "already_configured": "This Home Assistant is already connected to this mosque.",
+      "cannot_connect": "moschee.io could not be reached. Try again later.",
+      "denied": "The code was declined on moschee.io.",
+      "expired": "The code expired before it was confirmed. Start again.",
+      "not_linked": "The code was confirmed, but not for a mosque. Confirm it while a mosque is selected on moschee.io.",
+      "reauth_successful": "Connected again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Switches for moschee.io",
+        "description": "Choose the switches moschee.io may see and switch, for example the power of the sound desk. They appear next to the Mischpult in moschee.io and in the app, and the mosque's switch rules can switch them at the prayer times.",
+        "data": {
+          "switches": "Shared switches"
+        }
+      },
+      "confirm": {
+        "title": "Ask before switching off",
+        "description": "moschee.io asks before switching these off, and warns while a translation is live.",
+        "data": {
+          "confirm_off": "Ask before switching off"
+        }
+      }
+    },
+    "error": {
+      "too_many": "Share at most 50 switches."
+    }
+  },
+  "selector": {
+    "environment": {
+      "options": {
+        "production": "moschee.io",
+        "stage": "Stage (moschee-stage.de)"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "relay": {
+        "name": "moschee.io connection"
+      }
+    },
+    "sensor": {
+      "live_rooms": {
+        "name": "Live translations",
+        "unit_of_measurement": "rooms"
+      },
+      "next_rule": {
+        "name": "Next switch rule"
+      },
+      "level": {
+        "name": "{channel} level"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "moschee.io no longer knows this Home Assistant. Connect it again."
+    },
+    "not_allowed": {
+      "message": "moschee.io only lets this Home Assistant view the desk. Change it under Smart Mosque → Mischpult → Einrichtung → Home Assistant."
+    },
+    "relay_offline": {
+      "message": "Not connected to moschee.io right now."
+    },
+    "desk_timeout": {
+      "message": "The desk did not answer in time."
+    },
+    "desk_refused": {
+      "message": "The desk refused: {code}. A protected channel stays on during the prayer."
+    }
+  }
+}
