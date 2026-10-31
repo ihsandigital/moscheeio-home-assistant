@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Connect to moschee.io",
-        "description": "Home Assistant pairs with your mosque on moschee.io like a Smart-Mosque-Box. You confirm a code on moschee.io in the next step.",
+        "description": "Home Assistant pairs with your mosque on moschee.io like a Smart-Mosque-Box. You confirm a code on moschee.io in the next step.\n\nThis integration is in beta. The sound desk's channels work with Behringer X32 desks only for now.",
         "data": {
           "environment": "moschee.io"
         },
         "data_description": {
-          "environment": "Use Stage only if moschee.io asked you to test a preview."
+          "environment": "Only for testing previews of moschee.io."
         }
       },
       "reauth_confirm": {
