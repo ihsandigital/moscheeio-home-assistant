@@ -82,3 +82,7 @@ pip install -r requirements_test.txt ruff
 pytest
 ruff check . && ruff format --check .
 ```
+
+## License
+
+MIT, see [LICENSE](LICENSE). The integration needs a moschee.io account.
