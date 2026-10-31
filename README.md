@@ -1,5 +1,8 @@
 # moschee.io for Home Assistant
 
+> **Beta.** This integration and moschee.io's Mischpult are in beta. The sound desk's channels work
+> with Behringer X32 desks only for now (X32, Compact, Producer, Rack, Core).
+
 A Home Assistant integration, installed through HACS, that connects Home Assistant to
 [moschee.io](https://moschee.io) and its Smart Mosque relay:
 
@@ -23,7 +26,8 @@ A Home Assistant integration, installed through HACS, that connects Home Assista
 5. Open the integration's *Configure* and choose the switches moschee.io may see, and which of them
    it asks about before switching off.
 
-Use the *Stage* environment only if moschee.io asked you to test a preview.
+Home Assistant users with *Advanced mode* turned on in their profile can also pick *Stage*, moschee.io's
+preview environment. It is only for testing previews of moschee.io.
 
 ## In moschee.io
 

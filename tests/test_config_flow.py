@@ -55,7 +55,7 @@ async def _run_until_progress_done(
     return await hass.config_entries.flow.async_configure(result["flow_id"])
 
 
-async def test_pairs_with_a_code(
+async def test_pairs_with_moschee_io(
     hass: HomeAssistant, mock_api: AsyncMock, mock_relay: AsyncMock
 ) -> None:
     patcher, api = _patch_api()
@@ -64,15 +64,36 @@ async def test_pairs_with_a_code(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] is FlowResultType.FORM
+        # Without advanced mode there is nothing to choose.
+        assert "environment" not in result["data_schema"].schema
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await _run_until_progress_done(hass, result, api)
+        assert result["type"] is FlowResultType.CREATE_ENTRY
+    assert result["title"] == "IGS Moschee"
+    assert result["data"]["api_url"] == "https://app.moschee.io"
+    assert result["data"]["token"] == "token"
+    assert result["result"].unique_id == BOX_ID
+
+
+async def test_stage_only_in_advanced_mode(
+    hass: HomeAssistant, mock_api: AsyncMock, mock_relay: AsyncMock
+) -> None:
+    patcher, api = _patch_api()
+    with patcher:
+        result = await hass.config_entries.flow.async_init(
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_USER,
+                "show_advanced_options": True,
+            },
+        )
+        assert "environment" in result["data_schema"].schema
         result = await hass.config_entries.flow.async_configure(
             result["flow_id"], {"environment": "stage"}
         )
         result = await _run_until_progress_done(hass, result, api)
         assert result["type"] is FlowResultType.CREATE_ENTRY
-    assert result["title"] == "IGS Moschee"
     assert result["data"]["api_url"] == "https://app.moschee-stage.de"
-    assert result["data"]["token"] == "token"
-    assert result["result"].unique_id == BOX_ID
 
 
 async def test_declined_code_aborts(hass: HomeAssistant) -> None:
@@ -81,9 +102,7 @@ async def test_declined_code_aborts(hass: HomeAssistant) -> None:
         result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        result = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {"environment": "production"}
-        )
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], {})
         result = await _run_until_progress_done(hass, result, api)
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "denied"
@@ -98,9 +117,7 @@ async def test_same_connection_twice_aborts(
         result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        result = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {"environment": "production"}
-        )
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], {})
         result = await _run_until_progress_done(hass, result, api)
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "already_configured"

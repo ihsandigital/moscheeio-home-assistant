@@ -67,26 +67,33 @@ class MoscheeioConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Choose moschee.io or its stage environment."""
+        """Explain the pairing; moschee.io's Stage only in advanced mode.
+
+        Stage is moschee.io's preview environment. Only users who turned on
+        advanced mode in their profile can pick it, so everyone else pairs
+        with moschee.io itself without seeing the choice.
+        """
+        advanced = self.show_advanced_options
         if user_input is not None:
-            self._api_url = ENVIRONMENTS[user_input[CONF_ENVIRONMENT]]
+            environment = (
+                user_input.get(CONF_ENVIRONMENT, "production")
+                if advanced
+                else "production"
+            )
+            self._api_url = ENVIRONMENTS[environment]
             return await self.async_step_code()
-        return self.async_show_form(
-            step_id="user",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(
-                        CONF_ENVIRONMENT, default="production"
-                    ): SelectSelector(
-                        SelectSelectorConfig(
-                            options=list(ENVIRONMENTS),
-                            translation_key="environment",
-                            mode=SelectSelectorMode.LIST,
-                        )
+        fields: dict[Any, Any] = {}
+        if advanced:
+            fields[vol.Required(CONF_ENVIRONMENT, default="production")] = (
+                SelectSelector(
+                    SelectSelectorConfig(
+                        options=list(ENVIRONMENTS),
+                        translation_key="environment",
+                        mode=SelectSelectorMode.LIST,
                     )
-                }
-            ),
-        )
+                )
+            )
+        return self.async_show_form(step_id="user", data_schema=vol.Schema(fields))
 
     async def async_step_reauth(
         self, entry_data: Mapping[str, Any]

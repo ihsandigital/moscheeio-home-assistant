@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Mit moschee.io verbinden",
-        "description": "Home Assistant wird wie eine Smart-Mosque-Box mit Ihrer Moschee auf moschee.io gekoppelt. Im nächsten Schritt bestätigen Sie einen Code auf moschee.io.",
+        "description": "Home Assistant wird wie eine Smart-Mosque-Box mit Ihrer Moschee auf moschee.io gekoppelt. Im nächsten Schritt bestätigen Sie einen Code auf moschee.io.\n\nDiese Integration ist in der Beta. Die Kanäle des Mischpults gibt es vorerst nur für Behringer-X32-Pulte.",
         "data": {
           "environment": "moschee.io"
         },
         "data_description": {
-          "environment": "Stage nur wählen, wenn moschee.io Sie zum Testen einer Vorschau gebeten hat."
+          "environment": "Nur zum Testen von Vorschauen von moschee.io."
         }
       },
       "reauth_confirm": {
